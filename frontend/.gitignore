@@ -1,0 +1,27 @@
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Secrets and environment variables
+.env
+.env.*
+!.env.example
+
+# Generated frontend files
+frontend/node_modules/
+frontend/dist/
+
+# Local model and notebook artifacts
+.ipynb_checkpoints/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Logs
+*.log

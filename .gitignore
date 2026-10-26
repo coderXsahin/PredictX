@@ -1,9 +1,24 @@
+# Python
 .venv/
 __pycache__/
 *.py[cod]
-.ipynb_checkpoints/
+.pytest_cache/
+
+# Secrets
 .env
-data/*
-!data/.gitkeep
-models/*
-!models/.gitkeep
+.env.*
+!.env.example
+
+# Frontend generated files
+/frontend/node_modules/
+/frontend/dist/
+
+# Python and tool caches
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Logs and editor files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/

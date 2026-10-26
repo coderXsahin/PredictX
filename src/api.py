@@ -1,4 +1,4 @@
-
+import json
 from contextlib import asynccontextmanager
 from typing import Literal
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,8 +24,21 @@ if not MODEL_PATH.exists():
         "Run python src/train_model.py first."
     )
 
+METADATA_PATH = ROOT / "models" / "model_metadata.json"
+
+if not METADATA_PATH.exists():
+    raise FileNotFoundError(
+        f"Model metadata not found at {METADATA_PATH}. "
+        "Run python src/train_model.py first."
+    )
+
 model = joblib.load(MODEL_PATH)
-THRESHOLD = 0.40
+
+with METADATA_PATH.open("r", encoding="utf-8") as file:
+    model_metadata = json.load(file)
+
+THRESHOLD = float(model_metadata["threshold"])
+MODEL_NAME = str(model_metadata["model_name"])
 
 
 @asynccontextmanager
@@ -128,7 +141,7 @@ def predict(
         "status": record.status,
         "failure_probability": round(record.failure_probability, 4),
         "threshold": record.threshold,
-        "model": "Random Forest",
+        "model": MODEL_NAME,
         "created_at": record.created_at.isoformat(),
         "message": (
             "Inspection recommended"

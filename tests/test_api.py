@@ -1,7 +1,7 @@
 
 from fastapi.testclient import TestClient
 
-from src.api import app
+from src.api import app, MODEL_NAME, THRESHOLD
 
 client = TestClient(app)
 
@@ -36,8 +36,8 @@ def test_prediction_endpoint():
     assert data["prediction"] in [0, 1]
     assert data["status"] in ["HIGH_RISK", "LOWER_RISK"]
     assert 0.0 <= data["failure_probability"] <= 1.0
-    assert data["threshold"] == 0.4
-    assert data["model"] == "Random Forest"
+    assert data["threshold"] == THRESHOLD
+    assert data["model"] == MODEL_NAME
 
 
 def test_invalid_machine_type_is_rejected():
